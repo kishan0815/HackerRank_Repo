@@ -1,0 +1,30 @@
+import java.io.*;
+import java.util.*;
+
+public class Solution {
+
+    public static void main(String[] args) {
+        Scanner scan = new Scanner(System.in);
+        String s = scan.nextLine();
+        // Write your code here.
+        s.trim();
+        String arr[] = s.split("[-+!@.^:,_\"\'\\?\\s+]");
+        int count = 0;
+        for(String s1 : arr){
+            if(s1.length() == 0){
+                continue;
+            }
+            count++;
+        }
+        System.out.println(count);
+        for(String s2 : arr){
+            if(s2.length() == 0){
+                continue;
+            }
+            s2.trim();
+            System.out.println(s2);
+            s2.trim();
+        }
+        scan.close();
+    }
+}

@@ -1,0 +1,38 @@
+import java.util.Scanner;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.*;
+
+public abstract class Cal{
+    
+    static public String getDay(String day, String month, String year){
+        Calendar cal = Calendar.getInstance();
+        cal.set(Integer.parseInt(year),Integer.parseInt(month) - 1,Integer.parseInt(day));
+        SimpleDateFormat formatter = new SimpleDateFormat("EEE");
+        
+        String dayName = formatter.format(cal.getTime());
+        if(dayName.startsWith("M"))
+            dayName = "MONDAY";
+        if(dayName.startsWith("Tu"))
+            dayName = "TUESDAY";
+        if(dayName.startsWith("W"))
+            dayName = "WEDNESDAY";
+        if(dayName.startsWith("Th"))
+            dayName = "THURSDAY";
+        if(dayName.startsWith("F"))
+            dayName = "FRIDAY";
+        if(dayName.startsWith("Sa"))
+            dayName = "SATURDAY";
+        if(dayName.startsWith("Su"))
+            dayName = "SUNDAY";
+        return dayName;
+    }
+	public static void main(String[] args) {
+        Scanner in = new Scanner(System.in);
+        String month = in.next();
+        String day = in.next();
+        String year = in.next();
+        
+        System.out.println(getDay(day, month, year));
+    }
+}

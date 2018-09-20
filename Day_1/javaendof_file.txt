@@ -1,0 +1,44 @@
+
+import java.io.*;
+2
+import java.util.*;
+3
+​
+4
+public class Solution {
+5
+​
+6
+    public static void main(String[] args) {
+7
+        /* Enter your code here. Read input from STDIN. Print output to STDOUT. Your class should be named Solution. */
+8
+        Scanner sc = new Scanner(System.in);
+9
+        String s;
+10
+        int count = 0;
+11
+        while(true){
+12
+            s = sc.nextLine();
+13
+            if(s.contains("end-of-file")){
+14
+                break;
+15
+            }
+16
+            count++;
+17
+            System.out.println(""+count +" " +s);
+18
+        }
+19
+        count++;
+20
+        System.out.println(""+count +" " +s);
+21
+    }
+22
+}
