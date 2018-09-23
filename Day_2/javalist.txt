@@ -1,0 +1,33 @@
+import java.io.*;
+import java.util.*;
+
+public class Solution {
+
+    private static final Scanner scanner = new Scanner(System.in);
+    public static void main(String[] args) {
+        /* Enter your code here. Read input from STDIN. Print output to STDOUT. Your class should be named Solution. */
+       int n = scanner.nextInt();
+        List<Integer> list = new ArrayList<Integer>();
+        for(int i=0;i<n;i++) {
+            int temp = scanner.nextInt();
+            list.add(temp);
+        }
+        int t = scanner.nextInt();
+        for(int i=0;i<t;i++) {
+            String op = scanner.next();
+            if(op.equals("Insert")) {
+                int index = scanner.nextInt();
+                int ele = scanner.nextInt();
+                list.add(index,ele);
+            }
+            if(op.equals("Delete")) {
+                int index = scanner.nextInt();
+                list.remove(index);
+            }
+        }
+        for(int a: list) {
+            System.out.print(a+" ");
+        }
+        scanner.close();
+    }
+}
