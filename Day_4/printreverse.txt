@@ -1,0 +1,28 @@
+    // Complete the reversePrint function below.
+
+    /*
+     * For your reference:
+     *
+     * SinglyLinkedListNode {
+     *     int data;
+     *     SinglyLinkedListNode next;
+     * }
+     *
+     */
+    static void reversePrint(SinglyLinkedListNode head) {
+        if(head == null){
+            System.out.println("");
+        }
+        else{
+            SinglyLinkedListNode curr = head;
+            List<Integer> list = new ArrayList<Integer>();
+            while(curr.next != null){
+                list.add(curr.data);
+                curr = curr.next;
+            }
+            list.add(curr.data);
+            for(int i = list.size() - 1;i>=0;i--){
+                System.out.println(list.get(i));
+            }
+        }
+    }
