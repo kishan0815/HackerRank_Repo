@@ -1,0 +1,23 @@
+/* 
+
+class Node 
+	int data;
+	Node left;
+	Node right;
+*/
+public static void levelOrder(Node root) {
+	if(root == null)
+		return;
+	Queue q = new LinkedList();
+	q.add(root);
+	while(q.size()>0){
+		Node t = (Node)q.remove();
+		System.out.print(t.data + " ");
+		if(t.left!=null){
+			q.add(t.left);
+		}
+		if(t.right != null){
+			q.add(t.right);
+		}
+	}
+}
