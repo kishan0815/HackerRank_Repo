@@ -26,8 +26,21 @@ function readLine() {
 
 // Complete the repeatedString function below.
 function repeatedString(s, n) {
-
-
+    var count= 0;
+    var repeat = parseInt(n/s.length);
+    var remaining = n % s.length;
+    for(var i=0;i<s.length;i++) {
+        if(s[i%s.length] === 'a') {
+            count++;
+        }
+    }
+    var lastCount = 0;
+    for(var i=0;i<remaining;i++) {
+        if(s[i] === 'a') {
+            lastCount++;
+        }
+    }
+    return count * repeat + lastCount;
 }
 
 function main() {
