@@ -25,49 +25,27 @@ function readLine() {
 /*
  * Complete the twoStacks function below.
  */
-function twoStacks(x, a, b) {
-    /*
-     * Write your code here.
-     */
-    var s1 = [];
-    var s2 = [];
-    var sum = 0;
-    var op = 0;
-    for(var i=a.length-1;i>=0;i--) {
-        s1.push(a[i]);
-    }
-    for(var i=b.length-1;i>=0;i--) {
-        s2.push(b[i]);
-    }
-    while(sum <= x && (s1.length > 0 && s2.length > 0)) {
-        if(s1.length > 0 && s2.length > 0) {
-            if(s1[s1.length - 1] <= s2[s2.length - 1]) {
-                sum += s1.pop();
-                if(sum <= x) {
-                    op++;
-                }
-            }
-            else if(s2[s2.length - 1] < s1[s1.length - 1]) {
-                sum += s2.pop();
-                if(sum <= x) {
-                    op++;
-                }
-            }
+function twoStacks(x, a, b,n,m) {
+    
+    var sum=0,count=0,temp=0,i=0,j=0;        
+        
+        while(i<n && sum+a[i]<=x){   
+            sum+=a[i];
+            i++;
         }
-        else if(s2.length == 0) {
-            sum += s1.pop();
-            if(sum <= x) {
-                op++;
+        count=i;        
+       
+        while(j<m && i>=0){            
+            sum+=b[j];             
+            j++;
+            while(sum>x && i>0){
+                i--;
+                sum-=a[i];
             }
+            if(sum<=x && i+j>count)
+                count=i+j;
         }
-        else if(s1.length == 0) {
-            sum += s2.pop();
-            if(sum <= x) {
-                op++;
-            }
-        }
-    }
-    return op;
+return count;
 }
 
 function main() {
@@ -88,7 +66,7 @@ function main() {
 
         const b = readLine().split(' ').map(bTemp => parseInt(bTemp, 10));
 
-        let result = twoStacks(x, a, b);
+        let result = twoStacks(x, a, b,n,m);
 
         ws.write(result + "\n");
     }
