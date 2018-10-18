@@ -21,6 +21,7 @@ function processData(input) {
         }
     }
     
+    console.log(pos + 1);
 } 
 
 process.stdin.resume();
