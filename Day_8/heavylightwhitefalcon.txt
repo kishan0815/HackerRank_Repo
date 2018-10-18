@@ -1,0 +1,130 @@
+import java.io.*;
+import java.math.*;
+import java.text.*;
+import java.util.*;
+import java.util.regex.*;
+
+public class Solution {
+
+
+
+    public static void main(String[] args) throws IOException {
+        BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
+        
+        String line = in.readLine().trim();
+        String[] tokens = line.split(" ");
+        int n = Integer.parseInt(tokens[0]);
+        int q = Integer.parseInt(tokens[1]);
+        
+        values = new int[n];
+        depths = new int[n];
+        parents = new int[n];
+        for( int i=0; i<n; i++ ) parents[i] = -1;
+        children = new int[n][]; 
+        
+        root = 0;
+        
+        List<List<Integer>> edges = new ArrayList<>();
+        for( int i=0; i<n; i++ ) {
+            edges.add(new ArrayList<>());
+        }
+        for( int i=0; i<n-1; i++ ) {
+            line = in.readLine();
+            tokens = line.split(" ");
+            int l = Integer.parseInt(tokens[0].trim());
+            int r = Integer.parseInt(tokens[1].trim());
+            edges.get(l).add(r);
+            edges.get(r).add(l);
+        }
+        setParent(edges);
+        edges = null;
+        setDepth();
+        
+        
+        StringBuilder sb = new StringBuilder();
+        for( int i=0; i<q; i++ ) {
+            line = in.readLine();
+            tokens = line.split(" ");
+            int op = Integer.parseInt(tokens[0]);
+            int n1 = Integer.parseInt(tokens[1]);
+            int n2 = Integer.parseInt(tokens[2]);
+            if( op == 1 ) {
+                values[n1] = n2;
+            }else {
+                sb.append(findMax(n1, n2)).append(System.lineSeparator());
+            }
+        }
+        System.out.println(sb);
+        
+    }
+    
+    static int[] values;
+    static int[] depths;
+    static int[] parents;
+    static int[][] children; 
+    static int root;
+    
+    static void setParent(List<List<Integer>> edges) {
+        Queue<Integer> q = new ArrayDeque<>();
+        q.add(root);
+        while( !q.isEmpty() ) {
+            int n = q.remove();
+            List<Integer> cc = new ArrayList<>();
+            for( int c : edges.get(n) ) {
+                if( parents[n] == -1 || c != parents[n] ) {
+                    parents[c] = n;
+                    q.add(c);
+                    cc.add(c);
+                }
+            }
+            children[n] = new int[cc.size()];
+            for( int i=0; i<cc.size(); i++ ) children[n][i] = cc.get(i);
+        }
+    }
+    
+    static void setDepth() {
+        List<Integer> q1 = new ArrayList<>();
+        List<Integer> q2 = new ArrayList<>();
+        List<Integer> tmp = null;
+        q1.add(root);
+        int currDepth = 0;
+        while( !q1.isEmpty() ) {
+            for( int n : q1 ) {
+                depths[n] = currDepth;
+                for( int c : children[n] ) {
+                    q2.add(c);
+                }
+            }
+            currDepth++;
+            tmp = q1;
+            q1 = q2;
+            q2 = tmp;
+            q2.clear();
+        }
+    }
+    
+    static int findMax(int start, int end) {
+        int max = Integer.MIN_VALUE;
+        int left = start;
+        int right = end;
+        while( depths[left] > depths[right] ) {
+            if( values[left] > max ) max = values[left];
+            left = parents[left];
+        }
+        while( depths[left] < depths[right] ) {
+            if( values[right] > max ) max = values[right];
+            right = parents[right];
+        }
+        if( left != right ) {
+            while( left != right ) {
+                if( values[left] > max ) max = values[left];
+                if( values[right] > max ) max = values[right];
+                left = parents[left];
+                right = parents[right];
+            }
+        }
+        if( values[left] > max ) max = values[left];
+        return max;
+    }
+    
+}
