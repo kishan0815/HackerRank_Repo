@@ -1,0 +1,64 @@
+import java.io.*;
+import java.util.*;
+import java.text.*;
+import java.math.*;
+import java.util.regex.*;
+
+public class Solution {
+
+    public static void main(String[] args) {
+        
+        Scanner in = new Scanner(System.in);
+        int n = in.nextInt();
+        long h = in.nextLong();
+        long v = in.nextLong();
+        Vertex[] vertex = new Vertex[n];
+        int[][] edges = new int[n-1][2];
+        
+        for (int i=0; i < n; i++) {
+            Vertex vx = new Vertex(in.nextLong(), in.nextLong());
+            vertex[i] = vx;
+        }
+        for (int i=0; i < n-1; i++) {
+            int u = in.nextInt()-1;
+            int w = in.nextInt()-1;
+            vertex[u].neighbours.add(vertex[w]);
+            vertex[w].neighbours.add(vertex[u]);
+        }
+        
+        long count = 0;
+        
+        for (int i=0; i < n; i++) {
+            count += (n-crawl(vertex[i], null, 0, 0, h, v));
+        }
+        
+        System.out.println(count/2);
+    }
+    
+    private static long crawl(Vertex v, Vertex prev, long hor, long vert, long H, long V) {
+        if (hor > H || vert > V) {
+            return 0;
+        }
+        
+        long res = 1;
+        
+        for (Vertex w : v.neighbours) {
+            if (w != prev) {
+                res += crawl(w, v, hor+Math.abs(v.x - w.x), vert+Math.abs(v.y - w.y), H, V);
+            }
+        }
+        
+        return res;
+    }
+    
+    private static class Vertex {
+        public long x,y;
+        public ArrayList<Vertex> neighbours;
+        
+        public Vertex(long hor, long vert) {
+            x = hor;
+            y = vert;
+            neighbours = new ArrayList();
+        }
+    }
+}
